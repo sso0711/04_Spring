@@ -2,7 +2,9 @@ package com.ssafy.ws.step2.dto;
 
 import java.io.Serializable;
 
-//객체 직렬화 가능하도록 Serializable 인터페이스를 구현한다.
+// DTO
+// 데이터 전달 역할, getter,setter만 가진 클래스
+// View와 Controller 사이에서 활용
 public class Movie implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -25,7 +27,8 @@ public class Movie implements Serializable {
 	public int getId() {
 		return id;
 	}
-
+	
+	// set부분이 없으면 불변객체이다!
 	public void setId(int id) {
 		this.id = id;
 	}

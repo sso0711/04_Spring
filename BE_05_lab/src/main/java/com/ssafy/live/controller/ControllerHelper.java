@@ -34,7 +34,10 @@ public interface ControllerHelper {
 
     public default void setupCookie(String name, String value, int maxAge, String path, HttpServletResponse resp) {
         // TODO: 01. 쿠키를 만들고 maxAge, path를 설정 후 resp에 추가해보자.
-
+    	Cookie c = new Cookie(name, value);
+    	c.setMaxAge(maxAge);
+    	c.setPath(path);
+    	resp.addCookie(c); // 내려보내주기 필수!!
         // END
     }
 }

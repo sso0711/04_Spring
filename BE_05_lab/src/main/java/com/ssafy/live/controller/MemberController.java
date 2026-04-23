@@ -75,7 +75,16 @@ public class MemberController extends HttpServlet implements ControllerHelper {
         String pass = request.getParameter("pass");
         // TODO: 10. 로그인 성공 시 세션에 loginUser를 키로 member를 추가하고 "/" 로 redirect 하세요.
             //  로그인 실패시는 alertMsg에 메시지를 추가하고 "/member/login-form.jsp"로 이동하세요.
-
+        Member member = mService.login(email, pass);
+        // 성공
+        if(member != null) {
+        	request.getSession().setAttribute("loginUser", member);
+        	redirect(request, response, "/");
+        // 실패
+        }else {
+        	request.setAttribute("alertMsg", "login fail");
+        	forward(request, response, "/member/login-form.jsp");
+        }
         // END
     }
 

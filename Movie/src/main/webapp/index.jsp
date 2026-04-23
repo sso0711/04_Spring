@@ -13,8 +13,8 @@
         <%
          String root = request.getContextPath();
         %>
-		<a href="<%=root%>/main?action=regist-form">영화 등록하기</a>
-		<a href="<%=root%>/main?action=list">영화 목록보기</a>
+		<a href="<%=root%>/movie?action=regist-form">영화 등록하기</a>
+		<a href="<%=root%>/movie?action=list">영화 목록보기</a>
         <!-- END -->
     </div>
 </body>

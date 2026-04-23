@@ -22,11 +22,10 @@
     String root = request.getContextPath();
     %>
 	
-	<div>
-		<fieldset>
+	<fieldset>
 		<legend>영화 정보 입력</legend>
-		<form action="<%=root %>/main">
-			<input type="hidden" name="action" value="regist">
+		<form method="post" action="${pageContext.request.contextPath}/movie">
+		    <input type="hidden" name="action" value="regist">
 		
 		    <label>제목</label>
 		    <input type="text" name="title"><br>
@@ -43,8 +42,7 @@
 		    <input type="submit" value="등록">
 		    <input type="reset" value="초기화">
 		</form>
-	    </fieldset>
-	</div>
+    </fieldset>
 	
 </body>
 </html>

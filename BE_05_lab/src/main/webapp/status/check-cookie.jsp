@@ -23,7 +23,14 @@
                 </tr>
             </thead>
             <!-- TODO: 04. 서버로 전송된 쿠키의 목록을 출력하세요. -->
-
+			<c:if test="${cookie != null }">
+				<c:forEach items="${cookie}" var="entry">
+					<tr>
+						<td>${entry.value.name }</td>
+						<td>${ URLDecoder.decode(entry.value.value., "UTF-8") }</td>
+					</tr>
+				</c:forEach>
+			</c:if>			
             <!-- END -->
             <c:if test="${cookie == null}">
                 <tr>

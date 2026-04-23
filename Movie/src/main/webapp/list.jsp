@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ page import="java.util.List" %>
 <%@ page import="com.ssafy.ws.step2.dto.Movie" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 <html>
@@ -41,30 +42,29 @@ th {
         <th>상영시간</th>
     </tr>
 
-<%
-    List<Movie> list = (List<Movie>) request.getAttribute("list");
+    <!-- 리스트 존재할 때 -->
+    <c:if test="${not empty list}">
+        <c:forEach var="m" items="${list}" varStatus="status">
+            <tr>
+                <td>
+                    <a href="${pageContext.request.contextPath}/movie?action=detail&code=${m.id}">
+                        ${m.id}
+                    </a>
+                </td>
+                <td>${m.title}</td>
+                <td>${m.director}</td>
+                <td>${m.genre}</td>
+                <td>${m.runningTime}</td>
+            </tr>
+        </c:forEach>
+    </c:if>
 
-    if (list != null && !list.isEmpty()) {
-        for (int i = 0; i < list.size(); i++) {
-            Movie m = list.get(i);
-%>
-    <tr>
-        <td><%= i + 1 %></td>
-        <td><%= m.getTitle() %></td>
-        <td><%= m.getDirector() %></td>
-        <td><%= m.getGenre() %></td>
-        <td><%= m.getRunningTime() %></td>
-    </tr>
-<%
-        }
-    } else {
-%>
-    <tr>
-        <td colspan="5">등록된 영화가 없습니다.</td>
-    </tr>
-<%
-    }
-%>
+    <!-- 리스트 없을 때 -->
+    <c:if test="${empty list}">
+        <tr>
+            <td colspan="5">등록된 영화가 없습니다.</td>
+        </tr>
+    </c:if>
 
 </table>
 

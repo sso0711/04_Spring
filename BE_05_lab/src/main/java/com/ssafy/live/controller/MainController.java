@@ -68,8 +68,11 @@ public class MainController extends HttpServlet implements ControllerHelper {
             throws ServletException, IOException {
         // TODO: 03. 다음을 만족시키는 쿠키를 생성해서 클라이언트에게 전송하고 /main?action=check-cookie에서 확인하세요. 
         // forward와 redirect 방식으로 각각 처리해보고 두 방식의 차이점을 고민해보자.
+    	
+    	// 어느 앱에서든 접근 가능
         setupCookie("just-10-min", "10분유지쿠키", 60 * 10, "/", response);
         setupCookie("just-1-min", URLEncoder.encode("1분 유지 쿠키", "UTF-8"), 60 * 1, null, response);
+        // 요청경로가 member일때만 보내짐.
         setupCookie("status-path", "경로지정쿠키", -1, request.getContextPath() + "/member", response);
         setupCookie("immediate-del", "010-1234-5678", 0, null, response);
         redirect(request, response, "/main?action=check-cookie");
@@ -85,7 +88,18 @@ public class MainController extends HttpServlet implements ControllerHelper {
             request.setAttribute("result", result);
             // TODO: 05. 최근 찾아본 구구단의 목록을 recentGugu라는 이름으로 쿠키에 담아서 관리해보자.
             //  쿠키의 value로 사용할 수 있는 문자열로 구분자를 두자.
-
+            Cookie[] cookies = request.getCookies();
+            String preValue ="";
+            if(cookies != null) {
+            	for(Cookie c: cookies) {
+            		if(c.getName().equals("recentGugu")) {
+            			preValue = c.getValue();
+            			break;
+            		}
+            	}
+            }
+            String newValue = preValue.isEmpty()?preValue + dan: preValue+"-"+dan;
+            setupCookie("recentGugu", newValue, 60*10, newValue, response);
             // END
             forward(request, response, "/gugu/gugu-result.jsp");
         } catch (NumberFormatException e) {
@@ -106,7 +120,15 @@ public class MainController extends HttpServlet implements ControllerHelper {
         // TODO: 16. 파라미터인 product를 session의 cart attribute에 추가하세요.
         //  cart는 Map<String, Integer> 타입이다.
         //  처리 후 redirect로 /main?action=cart-form로 이동하세요.
-
+        HttpSession session = request.getSession();
+        Map<String, Integer> cart = (Map)session.getAttribute("cart");
+        if(cart == null) {
+        	cart = new HashMap<>();
+        	session.setAttribute("cart", cart);
+        }
+        
+        cart.merge(product, 1, (ov, nv) -> ov + nv);
+        redirect(request, response, "/main?action=cart-form");
         // END
     }
 
@@ -114,8 +136,11 @@ public class MainController extends HttpServlet implements ControllerHelper {
             throws ServletException, IOException {
         // TODO: 17. session에 담긴 cart를 삭제하고 'alertMsg'를 키로 '구매 완료'를 전송하세요.
         //  처리 후 redirect로 /main?action=cart-form로 이동하세요.
-
-        // END
+    	HttpSession session = request.getSession();
+    	session.removeAttribute("cart");
+    	session.setAttribute("alertMsg", "구매 완료");
+    	redirect(request, response, "/main?action=cart-form");
+    	// END
     }
 
     private void exception(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
