@@ -99,7 +99,8 @@ public class MemberController extends HttpServlet implements ControllerHelper {
     private void logout(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // TODO: 11. 세션을 만료시키고 /로 redirect 하세요.
-
+    	request.getSession().invalidate();
+    	redirect(request,response,"/");
         // END
     }
 

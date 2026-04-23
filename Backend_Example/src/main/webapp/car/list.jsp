@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<c:set var="root" value="${pageContext.servletContext.contextPath }" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,8 +17,8 @@ table, th, td {
 	<%@ include file="/header.jsp"%>
 	<h1>목록 조회 페이지</h1>
 
-	<a href="#">메인 화면으로</a>
-	<a href="#">등록하기</a>
+	<a href="${root}">메인 화면으로</a>
+	<a href="${pageContext.request.contextPath}/regist">등록하기</a>
 	<table>
 		<thead>
 			<tr>

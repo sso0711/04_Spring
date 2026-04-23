@@ -29,19 +29,19 @@ public class CarServiceImpl implements CarService {
 	@Override
 	public Member login(String email, String password) {
 		// TODO Auto-generated method stub
-		return null;
+		return dao.login(email,password);
 	}
 
 	@Override
 	public List<Car> selectAll() {
 		// TODO Auto-generated method stub
-		return null;
+		return dao.selectAll();
 	}
 
 	@Override
 	public int insert(Car car) {
 		// TODO Auto-generated method stub
-		return 0;
+		return dao.insert(car);
 	}
 
 

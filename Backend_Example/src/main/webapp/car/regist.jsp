@@ -12,9 +12,9 @@
 		<h1>등록 페이지</h1>
 
 	</nav>
-	<form action="#" method="">
+	<form action="${root}/main" method="post">
 		<fieldset>
-
+			<input type="hidden" name="action" value="regist" />
 			<label> 제품 코드 <input type="text" name="code" maxlength="15"></label>
 			<br> <label> 모델 <input type="text" name="model"></label>
 			<br> <label> 가격 <input type="number" name="price">만원
@@ -24,8 +24,8 @@
 					<option value="중형">중형</option>
 					<option value="대형">대형</option>
 			</select>
-			</label> <br> <input type="submit" value="등록"> <br> <a
-				href="#">목록으로</a>
+			</label> <br> <input type="submit" value="등록"> <br> 
+			<a href="${root}/main/list">목록으로</a>
 		</fieldset>
 	</form>
 </body>

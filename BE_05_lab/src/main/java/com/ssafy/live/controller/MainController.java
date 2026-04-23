@@ -44,8 +44,8 @@ public class MainController extends HttpServlet implements ControllerHelper {
         // TODO: 18. exception 요청을 확인하세요. 
         case "exception" -> exception(request, response);
         // 오류 처리 방식: 잘못된 action 요청이 들어오면 404 에러를 발생
-        //default -> forward(request, response, "/error/404.jsp");
-        default -> response.sendError(HttpServletResponse.SC_NOT_FOUND); // 404 처리
+        // default -> response.sendError(HttpServletResponse.SC_NOT_FOUND); // 404 처리
+        default -> forward(request, response, "/error/404.jsp");
         }
     }
 

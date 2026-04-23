@@ -8,12 +8,27 @@ a {
 }
 </style>
 <div>
-	<span> <a href="#">홈으로</a>
-	</span> | <span> <a href="#">로그인</a>
-	</span> | <span> <a href="#">목록 조회</a>
-	</span> | <span>안녕하세요. 님. </span> | <span> <a
-		href="#">로그아웃</a>
-	</span> |
+	<span> <a href="${root}">홈으로</a></span>
+	
+	<!--11. 기타 처리 : 로그인 안된 경우 차량 정보 관리 관련 (목록, 등록, 수정, 삭제 등) 접근을 막아주세요.-->
+	<c:if test="${empty loginUser }">
+	| <span> <a href="${root}/main?action=login-form">로그인</a></span>
+    | <span> <a href="${root}/main?action=member-form">회원 가입</a></span>
+    </c:if>
+
+    <c:if test="${!empty loginUser }">
+        | <span>
+            <a href="${root }/main?action=car-list">목록조회</a>
+        </span>
+
+        | <span>
+            안녕하세요. ${loginUser.name}님. 
+        </span>
+        | <span>
+            <a href="${root}/main?action=logout">로그아웃</a>
+        </span>
+    </c:if>
+		
 </div>
 <hr />
 <script type="text/javascript">
