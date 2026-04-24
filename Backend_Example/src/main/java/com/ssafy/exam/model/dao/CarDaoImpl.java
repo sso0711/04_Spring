@@ -104,24 +104,85 @@ public class CarDaoImpl implements CarDao {
 	/// 
 	@Override
 	public Member login(String email, String password) {
-		// TODO Auto-generated method stub
-		return null;
+	    synchronized (members) {
+	        for (Member m : members) {
+	            if (m.getEmail().equals(email) && m.getPassword().equals(password)) {
+	                return m;
+	            }
+	        }
+	    }
+	    return null;
 	}
 
 	@Override
 	public List<Car> selectAll() {
-		// TODO Auto-generated method stub
-		return null;
+	    synchronized (cars) {
+	        return new ArrayList<>(cars);
+	    }
+	}
+	
+	// 상세 조회
+    public Car get(String code) {
+    	for (Car c : cars) {
+            if (c.getCode().equals(code)) {
+                return c;
+            }
+        }
+        return null;
+    }
+	// 성공하면 1
+	@Override
+	public int insert(Car car) {
+	    synchronized (cars) {
+	        cars.add(car);
+	        return 1;
+	    }
+	}
+	
+	@Override
+	public int modify(Car car) {
+	    synchronized (cars) {
+	        for (Car c : cars) {
+	            if (c.getCode().equals(car.getCode())) {
+	                c.setModel(car.getModel());
+	                c.setPrice(car.getPrice());
+	                c.setVendor(car.getVendor());
+	                c.setSize(car.getSize());
+	                return 1; // 성공
+	            }
+	        }
+	    }
+	    return 0; // 실패 (해당 코드 없음)
 	}
 
 	@Override
-	public int insert(Car car) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int delete(String code) {
+	    synchronized (cars) {
+	        for (Car c : cars) {
+	            if (c.getCode().equals(code)) {
+	                cars.remove(c);
+	                return 1; // 성공
+	            }
+	        }
+	    }
+	    return 0; // 실패
 	}
 
-
-
+	// remove 중에 for-each 위험??
+//	@Override
+//	public int delete(String code) {
+//	    synchronized (cars) {
+//	        Iterator<Car> it = cars.iterator();
+//	        while (it.hasNext()) {
+//	            Car c = it.next();
+//	            if (c.getCode().equals(code)) {
+//	                it.remove();
+//	                return 1;
+//	            }
+//	        }
+//	    }
+//	    return 0;
+//	}
 
 
 }

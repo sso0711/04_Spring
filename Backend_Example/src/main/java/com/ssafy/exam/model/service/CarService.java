@@ -15,10 +15,13 @@ public interface CarService {
     
 	List<Car> selectAll();
 
-
+	Car get(String code);
+	
 	int insert(Car car);
 
+	int modify(Car car);
 
+	int delete(String code);
 
     
 }

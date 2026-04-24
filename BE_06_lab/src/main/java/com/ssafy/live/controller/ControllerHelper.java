@@ -43,7 +43,9 @@ public interface ControllerHelper {
 
     public default void toJSON(Object target, HttpServletResponse response) throws ServletException, IOException {
         // TODO: 02. JSON 응답을 위한 메소드를 작성해보자.
-
+    	String json = new ObjectMapper().writeValueAsString(target);
+    	response.setContentType("application/json;charset=utf-8");
+    	response.getWriter().write(json);
         // END
     }
 }

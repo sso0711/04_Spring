@@ -8,17 +8,16 @@ a {
 }
 </style>
 <div>
-	<span> <a href="${root}">홈으로</a></span>
+	<span> <a href="${root}/main">홈으로</a></span>
 	
-	<!--11. 기타 처리 : 로그인 안된 경우 차량 정보 관리 관련 (목록, 등록, 수정, 삭제 등) 접근을 막아주세요.-->
-	<c:if test="${empty loginUser }">
+	<c:if test="${empty sessionScope.loginUser }">
 	| <span> <a href="${root}/main?action=login-form">로그인</a></span>
-    | <span> <a href="${root}/main?action=member-form">회원 가입</a></span>
     </c:if>
 
-    <c:if test="${!empty loginUser }">
+	<!--11. 기타 처리 : 로그인 안된 경우 차량 정보 관리 관련 (목록, 등록, 수정, 삭제 등) 접근을 막아주세요.-->
+    <c:if test="${not empty sessionScope.loginUser }">
         | <span>
-            <a href="${root }/main?action=car-list">목록조회</a>
+            <a href="${root }/main?action=list">목록조회</a>
         </span>
 
         | <span>
@@ -36,4 +35,8 @@ a {
 	if (alertMsg) {
 		alert(alertMsg);
 	}
+	<%
+		session.removeAttribute("alertMsg");
+	%>
+	
 </script>

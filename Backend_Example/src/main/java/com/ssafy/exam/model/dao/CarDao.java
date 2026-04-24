@@ -18,7 +18,10 @@ public interface CarDao {
 
 	int insert(Car car);
 
+	Car get(String code);
 
+	int modify(Car car);
 
+	int delete(String code);
 
 }

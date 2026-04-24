@@ -37,6 +37,12 @@ public class CarServiceImpl implements CarService {
 		// TODO Auto-generated method stub
 		return dao.selectAll();
 	}
+	
+	// 상세 조회
+	@Override
+    public Car get(String code) {
+        return dao.get(code);
+    }
 
 	@Override
 	public int insert(Car car) {
@@ -44,9 +50,17 @@ public class CarServiceImpl implements CarService {
 		return dao.insert(car);
 	}
 
-
+	@Override
+	public int modify(Car car) {
+		// TODO Auto-generated method stub
+		return dao.modify(car);
+	}
     
-
+	@Override
+	public int delete(String code) {
+		// TODO Auto-generated method stub
+		return dao.delete(code);
+	}
 
 
 }

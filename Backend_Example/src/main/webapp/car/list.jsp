@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<c:set var="root" value="${pageContext.servletContext.contextPath }" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,8 +16,8 @@ table, th, td {
 	<%@ include file="/header.jsp"%>
 	<h1>목록 조회 페이지</h1>
 
-	<a href="${root}">메인 화면으로</a>
-	<a href="${pageContext.request.contextPath}/regist">등록하기</a>
+	<a href="${root}/main">메인 화면으로</a>
+	<a href="${root}/regist-form">등록하기</a>
 	<table>
 		<thead>
 			<tr>
@@ -28,11 +27,14 @@ table, th, td {
 			</tr>
 		</thead>
 		<tbody>
+			<c:forEach items="${list}" var="item">
 				<tr>
-					<td><a href="#"></a></td>
-					<td></td>
-					<td>만원</td>
+					<td><a href="${root}/main?action=detail&code=${item.code}">${item.code}</a></td>
+					<td>${item.model} </td>
+					<td>${item.price}만원</td>
 				</tr>
+			</c:forEach>
+                
 		</tbody>
 	</table>
 </body>

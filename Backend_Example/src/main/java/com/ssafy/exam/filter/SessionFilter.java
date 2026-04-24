@@ -13,10 +13,12 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 // main의 모든 기능은 loginUser여야 가능 !
-@WebFilter("/main/*")
+@WebFilter("/member/*")
 public class SessionFilter extends HttpFilter {
 	@Override
 	protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
+		String uri = req.getRequestURI();
+		
 		HttpSession session = req.getSession();
 		if(session.getAttribute("loginUser") != null) {
 			chain.doFilter(req, res);
