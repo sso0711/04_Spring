@@ -9,6 +9,7 @@ import com.ssafy.exam.model.service.CarService;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -36,6 +37,7 @@ public class CarController extends HttpServlet implements ControllerHelper {
 			case "login-form" -> forward(request, response,"/login-form.jsp");
 			case "modify-form" -> modifyForm(request,response);
 			case "detail" -> detail(request,response);
+			case "delete" -> delete(request, response);
 			case "logout" -> logout(request, response);
 			// default -> response.sendError(HttpServletResponse.SC_NOT_FOUND); // 404 처리
 	        default -> forward(request, response, "/error/404.jsp");
@@ -68,7 +70,7 @@ public class CarController extends HttpServlet implements ControllerHelper {
 		
 		mService.insert(car);
 		
-		String alertMsg = "등록되었습니다. 로그인 후 사용해주세요.";
+		String alertMsg = "등록되었습니다.";
         HttpSession session = request.getSession();
         session.setAttribute("alertMsg", alertMsg);
         redirect(request, response, "/");
@@ -82,12 +84,12 @@ public class CarController extends HttpServlet implements ControllerHelper {
 
             request.setAttribute("car", car);
 
-            forward(request, response, "/detail.jsp");
+	        forward(request, response, "/car/detail.jsp");
         	
         } catch (NumberFormatException e) {
             e.printStackTrace();
             request.setAttribute("alertMsg", e.getMessage());
-            forward(request, response,"/regist.jsp");
+	        forward(request, response,"/car/list.jsp");
         } catch (RuntimeException e) {
             e.printStackTrace();
             redirect(request, response, "http://www.google.com/");
@@ -119,15 +121,23 @@ public class CarController extends HttpServlet implements ControllerHelper {
             String alertMsg = "수정되었습니다.";
             HttpSession session = request.getSession();
             session.setAttribute("alertMsg", alertMsg);
-            redirect(request, response, "/");
-
-            forward(request, response, "");
+	            redirect(request, response, "/main?action=list");
 	}        	
+
+	private void delete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String code = request.getParameter("code");
+		mService.delete(code);
+
+		HttpSession session = request.getSession();
+		session.setAttribute("alertMsg", "삭제되었습니다.");
+		redirect(request, response, "/member?action=list");
+	}
 	
 	private void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	
 		String email = request.getParameter("email");
 		String pass = request.getParameter("pass");
+		String rememberMe = request.getParameter("remember-me");
 
 		Member member = mService.login(email, pass);
 		
@@ -137,6 +147,17 @@ public class CarController extends HttpServlet implements ControllerHelper {
         	HttpSession session = request.getSession();
         	session.setAttribute("loginUser", member);
         	session.setAttribute("alertMsg", "로그인되었습니다.");
+
+			Cookie cookie = new Cookie("rememberId", email);
+			cookie.setPath(request.getContextPath());
+			
+			if (rememberMe != null) {
+				cookie.setMaxAge(60 * 60 * 24 * 30);
+			} else {
+				cookie.setMaxAge(0);
+			}
+			response.addCookie(cookie);
+
         	redirect(request, response, "/main");
         // 실패
         }else {

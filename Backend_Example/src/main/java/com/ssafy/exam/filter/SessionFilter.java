@@ -24,7 +24,7 @@ public class SessionFilter extends HttpFilter {
 			chain.doFilter(req, res);
 		} else {
 			session.setAttribute("alertMsg", "로그인 후 사용해주세요.");
-			res.sendRedirect(req.getContextPath() + "/member?action=login-form");
+			res.sendRedirect(req.getContextPath() + "/main?action=login-form");
 		}
 	}
 }

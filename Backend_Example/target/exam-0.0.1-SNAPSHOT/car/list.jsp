@@ -17,7 +17,7 @@ table, th, td {
 	<h1>목록 조회 페이지</h1>
 
 	<a href="${root}/main">메인 화면으로</a>
-	<a href="${root}/member?action=regist-form">등록하기</a>
+	<a href="${root}/main?action=regist-form">등록하기</a>
 	<table>
 		<thead>
 			<tr>
@@ -27,13 +27,21 @@ table, th, td {
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach items="${list}" var="item">
-				<tr>
-					<td><a href="${root}/main?action=detail&code=${item.code}">${item.code}</a></td>
-					<td>${item.model} </td>
-					<td>${item.price}만원</td>
-				</tr>
-			</c:forEach>
+			<%
+				java.util.List<com.ssafy.exam.model.dto.Car> list =
+						(java.util.List<com.ssafy.exam.model.dto.Car>) request.getAttribute("list");
+				if (list != null) {
+					for (com.ssafy.exam.model.dto.Car item : list) {
+			%>
+						<tr>
+							<td><a href="${root}/main?action=detail&code=<%= item.getCode() %>"><%= item.getCode() %></a></td>
+							<td><%= item.getModel() %></td>
+							<td><%= item.getPrice() %>만원</td>
+						</tr>
+			<%
+					}
+				}
+			%>
                 
 		</tbody>
 	</table>

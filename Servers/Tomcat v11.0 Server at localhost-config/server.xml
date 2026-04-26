@@ -136,7 +136,7 @@
              Note: The pattern used is equivalent to using pattern="common" -->
         <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs" pattern="%h %l %u %t &quot;%r&quot; %s %b" prefix="localhost_access_log" suffix=".txt"/>
 
-      <Context docBase="Movie" path="/Movie" reloadable="true" source="org.eclipse.jst.jee.server:Movie"/><Context docBase="BOOK" path="/BOOK" reloadable="true" source="org.eclipse.jst.jee.server:BOOK"/><Context docBase="BE_05_lab" path="/BE_05" reloadable="true" source="org.eclipse.jst.jee.server:BE_05_lab"/><Context docBase="BE_04_lab" path="/BE_04" reloadable="true" source="org.eclipse.jst.jee.server:BE_04_lab"/><Context docBase="Backend_Example" path="/exam" reloadable="true" source="org.eclipse.jst.jee.server:Backend_Example"/><Context docBase="trip_backend_gwangju_02_K_P_K" path="/project" reloadable="true" source="org.eclipse.jst.jee.server:trip_backend_gwangju_02_K_P_K"/></Host>
+      <Context docBase="BOOK" path="/BOOK" reloadable="true" source="org.eclipse.jst.jee.server:BOOK"/><Context docBase="BE_05_lab" path="/BE_05" reloadable="true" source="org.eclipse.jst.jee.server:BE_05_lab"/><Context docBase="BE_04_lab" path="/BE_04" reloadable="true" source="org.eclipse.jst.jee.server:BE_04_lab"/><Context docBase="Movie" path="/Movie" reloadable="true" source="org.eclipse.jst.jee.server:Movie"/><Context docBase="Backend_Example" path="/exam" reloadable="true" source="org.eclipse.jst.jee.server:Backend_Example"/></Host>
     </Engine>
   </Service>
 </Server>

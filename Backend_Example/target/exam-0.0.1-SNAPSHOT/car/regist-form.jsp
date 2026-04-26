@@ -13,7 +13,7 @@
 		<h1>등록 페이지</h1>
 
 	</nav>
-	<form action="${root}/member" method="post">
+	<form action="${root}/main" method="post">
 		<fieldset>
 			<input type="hidden" name="action" value="regist" />
 			<label> 제품 코드 <input type="text" name="code" maxlength="15"></label>
