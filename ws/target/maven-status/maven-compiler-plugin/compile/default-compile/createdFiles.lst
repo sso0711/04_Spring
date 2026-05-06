@@ -1,0 +1,5 @@
+com\ssfay\config\AppConfig.class
+com\ssfay\ws\model\dto\Book.class
+com\ssafy\MainApp.class
+com\ssfay\ws\model\dto\BookPrinter.class
+com\ssfay\ws\BookApp.class
