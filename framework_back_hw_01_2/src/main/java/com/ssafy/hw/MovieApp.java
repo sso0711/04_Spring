@@ -1,42 +1,53 @@
 package com.ssafy.hw;
 
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.List;
 
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+import com.ssafy.hw.config.MovieConfig;
 import com.ssafy.hw.model.dto.Movie;
+import com.ssafy.hw.service.MovieService;
 
+/**
+ * @Qualifier 테스트를 위한 메인 클래스
+ */
 public class MovieApp {
 
-    private static final Logger logger = LoggerFactory.getLogger(MovieApp.class);
-
     public static void main(String[] args) {
-        logger.info("=== SSAFY Cinema 시스템 시작 ===");
+    	// TODO: AnnotationConfigApplicationContext를 사용하여 Spring 컨테이너를 초기화하세요.
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(MovieConfig.class);
+        // TODO: MovieManager 빈을 획득하세요.
+        // - context.getBean() 메서드를 사용합니다.
+        // - MovieManager는 koreaMovieService가 주입된 상태입니다.
+        MovieManager movieManager = context.getBean(MovieManager.class);
 
-        // TODO: Movie 객체를 생성하세요.
-        // movie1: id=1, title="공생의 법칙", director="장싸피", genre="드라마", runningTime=132
-        // movie2: id=2, title="푸른 행성", director="데이빗 싸피", genre="SF", runningTime=162
-        Movie movie1 = new Movie(1, "공생의 법칙", "장싸피", "드라마", 132);
-        Movie movie2 = new Movie(2, "푸른 행성", "데이빗 싸피", "SF", 162);
 
-        logger.info("영화 등록: {}", movie1);
-        logger.info("영화 등록: {}", movie2);
-
-        // TODO: checkRunningTimeWarning 메서드를 호출하세요.
-        checkRunningTimeWarning(movie1);
-        checkRunningTimeWarning(movie2);
+        System.out.println("=== MovieManager를 통한 영화 등록 ===");
+        // TODO: 영화를 생성하고 MovieManager를 통해 등록하세요.
+        // 예: new Movie(1, "공생의 법칙", "장싸피", "드라마", 132)
+        Movie movie = new Movie(1, "공생의 법칙", "장싸피", "드라마", 132);
+        movieManager.addMovie(movie);
         
-        logger.info("=== 시스템 종료 ===");
-    }
+        Movie movie2 = new Movie(2, "복수의 시간", "윤싸피", "스릴러", 120);
+        movieManager.addMovie(movie2);
 
-    private static void checkRunningTimeWarning(Movie movie) {
-        // TODO: 상영 시간이 150분 초과이면 WARN 레벨로 "장시간 영화 주의" 로그를 출력하세요.
-        // 그 외에는 INFO 레벨로 "일반 영화" 로그를 출력하세요.
-        // 형식: "{제목} ({상영시간}분)"
-    	if (movie.getRunningTime() > 150) {
-    	    logger.warn("장시간 영화 주의: {} ({}분)", movie.getTitle(), movie.getRunningTime());
-    	} else {
-    	    logger.info("일반 영화: {} ({}분)", movie.getTitle(), movie.getRunningTime());
-    	}
+        System.out.println();
+        System.out.println("=== 등록된 영화 목록 ===");
+        // TODO: MovieManager를 통해 모든 영화를 조회하고 출력하세요.
+        List<Movie> movies = movieManager.findAllMovies();
+        for (Movie m : movies) {
+            System.out.println(m);
+        }
+
+        System.out.println();
+        System.out.println("=== GlobalMovieService 직접 테스트 ===");
+        // TODO: GlobalMovieService를 직접 가져와서 테스트하세요.
+        // - context.getBean()을 사용하여 빈 이름으로 가져옵니다.
+        MovieService globalMovieService = context.getBean("globalMovieService", MovieService.class);
+        globalMovieService.registerMovie(new Movie(3, "꿈의 설계자", "알렉스 싸피", "SF", 148));
+
+        // TODO: 컨테이너를 종료하세요.
+        context.close();
     }
 }
